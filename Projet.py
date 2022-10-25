@@ -2,6 +2,7 @@
 # Écrit par: Ryan McCracken, 10e, PÉI
 #
 # Github: @R-aMcC
+# Repository: https://github.com/R-aMcC/ProjetPersonel/blob/main/Projet
 
 
 
@@ -9,13 +10,14 @@ import cmath
 import math
 from time import sleep
 import sys
-i = 'a'
+
+i = None
 a = None
 b = None
 c = None
 d = None
 e = None
-true? = True
+true = True
 def isflt(i, nomvar):
   #Vérifie qu'un varialbe est un float
   try:
@@ -66,7 +68,7 @@ def quad_eq(a,b,c):
       print('Le variable x2 est un nombre complex et peut pas être arrodis')
     else:
       round(x2, 4)
-
+    #Donne la réponse sur la console 
     if x1==x2:
       print(f'x1 = {x1}')
       print(f'x2 = {x2}')
@@ -143,6 +145,7 @@ def quart_eq(a, b, c, d, e):
     d = d/a
     e = e/a
     a = a/a
+    # définit les autres fonctions utilisées pour trouver la réponse
     f = c - ((3*b*2)/8)
     g = d + ((b**3) / 8) - ((b*c)/2)
     h = e - ((3*b**4)/256) + (b**2 * c/16) - ( (b*d)/4)
@@ -151,6 +154,7 @@ def quart_eq(a, b, c, d, e):
     k = -((g**2)/64)
     #Maintenant, nous avons une équation de la forme ax^3 + bx^2 + cx +d = 0, alors on calule l'équation cubique 
     Xs = cubic_eq(1, i, j, k)
+    # La réponse est sous forme d'une liste, alors nous devons le mettre en floats
     y1 = Xs[0]
     y2 = Xs[1]
     y3 = Xs[2]
@@ -160,29 +164,29 @@ def quart_eq(a, b, c, d, e):
       q = sq_rt(y2)
       r = -g/(8*p*q)
       s = b/(4*a)
-      true? = True
+      true = True
     elif y1 and y3 != 0:
       p = sq_rt(y1)
       q = sq_rt(y3)
       r = -g/(8*p*q)
       s = b/(4*a)
-      true? = True
+      true = True
     elif y2 and y3 != 0:
       p = sq_rt(y2)
       q = sq_rt(y3)
       r = -g/(8*p*q)
       s = b/(4*a)
-      true? = True
+      true = True
     else:
-      #Un cas où l'équation ne fonctionne pas
+      #Un cas où l'équation ne fonctionne pas (Au cas d'une érreure, pas vue au paravant )
       print('solution invalide. Vérifie tes numéros')
-      true? = False
-      sys.exit()
-    if true? = True:
+      true = False
+    if true == True:
       x1 = p + q + r -s  
       x2 = p - q - r -s 
       x3 = -p + q - r -s 
       x4 = -p - q + r -s 
+      #mets les variables sur l'interface
       print(f'x1 = {x1}')
       print(f'x2 = {x2}')
       print(f'x3 = {x3}')
@@ -190,18 +194,25 @@ def quart_eq(a, b, c, d, e):
 def func():
   #Créé un loop infini, et qui fait toute fonctionner. Elle prends les informations données par l'utilisateur et décide quoi faire.
   loop = 1
-  
+  #Indique toutes les fonctions
   print('0 = Aide')
   print('1 = Équation quadratique (ax^2 + bx + c = 0)')
   print('2 = Équation cubique (ax^3 + bx^2 + cx + d = 0)')
   print('3 = Équation quartique (ax^4 + bx^3 + cx^2 + dx + e = 0)')
-  print('9 = Fin')
+  print('4 = Mettre un nombre au carée')
+  print('5 = Trouve la racine carée du nombre donnée')
+  print('6 = Mettre un nombre au cube')
+  print('7 = Trouve la racine cube du nombre donnée')
+  print("8 = Mets un nombre au pouvoir d'un autre nombre")
+  print("9 = Met le premier nombre à la racine de pouvoir de l'autre")
+  print('-1 = Fin')
   print(' ')
   print('-'*50)
   while loop == 1 :
     print(' ')
     inp = input("SVP entrer le numéro qui correspond à la fonction dont tu veux calculer :  ")
     print()
+    #Cherche un nombre et le compare aux données pour voir si c'est un nombre valide, et exécute la fonction
     if inp == '1':
       # Si l'utilisatuer entre 1, le programme demande pour 3 varaibles et calcule l'équation quadratique
       a = getflt('a NOTE: "a" ne peut pas être 0')
@@ -227,6 +238,7 @@ def func():
       print(f'x2: {x2}')
       print(f'x3: {x3}')
     elif inp == '3':
+      #Si 3 est entré, le code cherche 5 variables et calcule l'équation quartique
       a = getflt('a NOTE: "a" ne peut pas être 0')
       b = getflt('b')
       c = getflt('c')
@@ -235,11 +247,75 @@ def func():
       print()
       print()
       quart_eq(a, b, c, d, e)
+    elif inp == '4':
+      # pour 5, il met le numéro au carrée
+      a = getflt('mettre au carée')
+      aq = a**2 
+      print(f'{a} au caré est {aq}')
+    elif inp == '5':
+      # 6 cherche la racine carrée d'un nombre
+      a = getflt('trouvé la racine carrée')
+      if a < 0:
+        #Un nombre négatif n'as pas de racine carrée
+        print(f"{a} n'as pas de racine carrées car elle est négative")
+      aq = a**(1/2)
+      print(f'La racine carée de {a} est {aq}')
+    elif inp == '6':
+      #Cherche la valeur cubé (^3)
+      a = getflt('mettre au cube')
+      aq = a**3
+      print(f'Le cube de {a} est {aq}')
+    elif inp == '7':
+      # trouve la racine cube
+      a = getflt('trouver la racine cube')
+      if a<0:
+        a = -a
+        aq = -(a**(1/3))
+        a = -a
+      else:
+        aq = a**(1/3)
+      print(f'la racine cube de {a} est {aq} ')
+    elif inp == '8':
+      #Mets un nombre à un autre nombre
+      a = getflt('être mis au pouvoir de la prochaine variable')
+      b = getflt("être la degrée de l'équation")
+      aq = a**b
+      print(f'{a} au pouvoir de {b} est {aq}')
     elif inp == '9':
+      #Mets le premier nombre à la racine du 2e nombre
+      a = getflt('touver la racine de la prochaine varialbe ')
+      b = getflt('la dégrée de la racine (Positif)')
+      if b < 0:
+        print()
+        print('SVP enter un nombre positif  pour b')
+      
+      elif (b%2) == 0:
+        if (a < 0):
+          print()
+          print(f"Un nombre négatif n'as pas de racine {b}")
+          
+        else:
+          aq = a**(1/b)
+          print()
+          print(f'{a} à la racine {b} est {aq}')
+          a = a
+        
+      elif (b%2) == 1:
+        if a<0:
+          aq = -((-a)**(1/b))
+          print()
+          print(f'{a} à la racine {b} est {aq}')
+        else:
+          aq = a**(1/b)
+          print(f'{a} à la racine {b} est {aq}')
+
+    elif inp == '-1':
+      #ferme le code
       print(" ")
       print('Merci! À la prochaine!')
       sys.exit(1)
     elif inp == '0':
+      #Indique toute les fonctions et ce qu'ils font
       print('Voici ce que les fonctions font:')
       print('')
       print('1 = Équation quadratique de la forme "ax^2 + bx + c = 0"')
@@ -258,7 +334,4 @@ def func():
       print("Cette fonction prends 5 variavles, a, b, c, d et c, et trouve les 4 racines, ou réponses, (Valeurs de x ou y =0) de l'équation. Parfois, certaines des racines sont complexe, alors sous la forme de (n + m*i) où n est un nombre décimale et m est un nombre décimale.Cette fonction est la plus grade fonction qui est possible d'être résoud avec un radical, et est un polynome du 4e degrée.")
     else:
       print('SVP Entrer un numéro qui correspond à une fonction.')
-
-
-
 func()
