@@ -2,7 +2,7 @@
 # Écrit par: Ryan McCracken, 10e, PÉI
 #
 # Github: @R-aMcC
-# Repository: https://github.com/R-aMcC/ProjetPersonel/blob/main/Projet
+# Repository: https://github.com/R-aMcC/ProjetPersonel/blob/main/Projet.py
 
 
 
