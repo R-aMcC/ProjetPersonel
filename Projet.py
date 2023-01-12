@@ -96,15 +96,18 @@ def cubic_eq(a, b, c, d):
             "Le variable a ne peut pas être 0, sinon l'équation n'est pas cubique"
         )
     else:
-        f = ((3 * c / a) - ((b * b) / (a * a))) / 3
-        g = ((2 * (b * b * b) / (a * a * a)) - ((9 * b * c) / (a * a)) +
-             (27 * d / a)) / 27
-        h = ((g * g) / 4) + ((f * f * f) / 27)
+        f = ((3 * c / a) - ((b**2) / (a**2))) / 3
+        g = ((2 * (b**3) / (a**3)) - ((9 * b * c) / (a**2)) + (27 * d / a)) / 27
+        h = ((g**2) / 4) + ((f**3) / 27)
         if h > 0:
-            #seulement une vraie racine
-            i = (((g * g) / 4) - h)**(1 / 2)
+            #seulement une vraie racine (Il y a une erreure quelque part)
+            i = (((g**2) / 4) - h)**(1 / 2)
             r = -(g / 2) + (h)**(1 / 2)
-            s = (r)**(1 / 3)
+            
+            if r < 0:
+              s = -((-r)**(1/3))
+            else:
+              s = (r)**(1 / 3)
             t = -(g / 2) - (h)**(1 / 2)
             # Si t est négatif, Python ne fait pas correctement **(1/3) et retourne |u| comme étant un nombre complexe
             if t < 0:
@@ -114,10 +117,8 @@ def cubic_eq(a, b, c, d):
                 u = (t)**(1 / 3)
             x1 = (s + u) - (b / (3 * a))
             x1 = round_(x1)
-            x2 = -(s + u) / 2 - (b /
-                                 (3 * a)) + i * (s - u) * ((3)**(1 / 2)) / 2
-            x3 = -(s + u) / 2 - (b /
-                                 (3 * a)) - i * (s - u) * ((3)**(1 / 2)) / 2
+            x2 = -(s + u)/2 - (b / (3 * a)) + ((s - u) * ((3)**(1 / 2)) / 2)*(sq_rt(-1))
+            x3 = -(s + u)/2 - (b / (3 * a)) - ((s - u) * ((3)**(1 / 2)) / 2)*(sq_rt(-1))
             xs = [x1, x2, x3]
             return (xs)
         else:
@@ -129,7 +130,7 @@ def cubic_eq(a, b, c, d):
             else:
                 if h <= 0:
                     #Les 3 racines sont vraies
-                    i = (((g * g) / 4) - h)**(1 / 2)
+                    i = (((g**2) / 4) - h)**(1 / 2)
                     j = (i)**(1 / 3)
                     k = math.acos((-(g / (2 * i))))
                     l = j * (-1)
@@ -166,19 +167,22 @@ def quart_eq(a, b, c, d, e):
       
         # définit les autres fonctions utilisées pour trouver la réponse
         f = c - ((3 * b ** 2) / 8)
+      
         g = d + ((b**3) / 8) - ((b * c) / 2)
         h = e - ((3 * b**4) / 256) + (b**2 * c / 16) - ((b * d) / 4)
         i = f / 2
         j = ((f**2 - 4 * h) / 16)
         k = -((g**2) / 64)
-        #Maintenant, nous avons une équation de la forme ax^3 + bx^2 + cx +d = 0, alors on calule l'équation cubique
        
+        #Maintenant, nous avons une équation de la forme ax^3 + bx^2 + cx +d = 0, alors on calule l'équation cubique
+        
         Xs = cubic_eq(1, i, j, k)
         # La réponse est sous forme d'une liste, alors nous devons le mettre en floats
         y1 = Xs[0]
         y2 = Xs[1]
         y3 = Xs[2]
-    
+        
+      
         #Pour trouver la réponse, p et q sont équale aux racines de 2 variables qui ne sont pas 0
         if y1 and y2 != 0:
             p = sq_rt(y1)
@@ -203,6 +207,7 @@ def quart_eq(a, b, c, d, e):
             print('solution invalide. Vérifie tes numéros')
             true = False
         if true == True:
+            
             x1 = p + q + r - s
             x2 = p - q - r - s
             x3 = -p + q - r - s
